@@ -1,14 +1,14 @@
-from selenium import webdriver
+import pytest
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-def test_login():
-    service = Service("drivers/chromedriver")
-    driver = webdriver.Chrome(service=service)
 
-    driver.get("https://practicetestautomation.com/practice-test-login/")
+LOGIN_URL = "https://practicetestautomation.com/practice-test-login/"
 
+@pytest.mark.login
+def test_successful_login(driver):
+    driver.get(LOGIN_URL)
     driver.find_element(By.ID, "username").send_keys("student")
     driver.find_element(By.ID, "password").send_keys("Password123")
     driver.find_element(By.ID, "submit").click()
@@ -16,9 +16,38 @@ def test_login():
     success_message = driver.find_element(By.TAG_NAME, "h1").text
     assert success_message == "Logged In Successfully"
 
-    time.sleep(2)
-    driver.quit()
+@pytest.mark.login
+def test_invalid_login(driver):
+    driver.get(LOGIN_URL)
+    driver.find_element(By.ID, "username").send_keys("invalid_user")
+    driver.find_element(By.ID, "password").send_keys("wrong_pass")
+    driver.find_element(By.ID, "submit").click()
 
-if __name__ == "__main__":
-    print("Running test_login manually...")
-    test_login()
+    error_element = WebDriverWait(driver, 5).until(
+        EC.visibility_of_element_located((By.ID, "error"))
+    )
+    error_message = error_element.text
+    assert error_message == "Your username is invalid!"
+    
+@pytest.mark.login
+@pytest.mark.parametrize(
+    "username,password,expected_error",
+    [
+        ("", "", "Your username is invalid!"),
+        ("student", "", "Your password is invalid!"),
+        ("", "Password123", "Your username is invalid!"),
+        ("wrong", "Password123", "Your username is invalid!"),
+        ("student", "wrongpass", "Your password is invalid!"),
+    ]
+)
+def test_invalid_login_param(driver, username, password, expected_error):
+    driver.get(LOGIN_URL)
+    driver.find_element(By.ID, "username").send_keys(username)
+    driver.find_element(By.ID, "password").send_keys(password)
+    driver.find_element(By.ID, "submit").click()
+
+    error_element = WebDriverWait(driver, 5).until(
+        EC.visibility_of_element_located((By.ID, "error"))
+    )
+    error_message = error_element.text
+    assert error_message == expected_error
