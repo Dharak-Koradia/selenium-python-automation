@@ -20,6 +20,22 @@ A step-by-step evolution of a Selenium-based automation framework in Python — 
   - [x] **Parameterized test** using `@pytest.mark.parametrize` to run multiple login scenarios
 - [x] Added **explicit waits** using `WebDriverWait` to avoid flaky tests
 
+## 🚀 Phase 3: Introduced Page Object Model (POM) Design Pattern
+
+In this phase:
+
+- [x] Refactored the login test to follow the Page Object Model structure for better code organization and maintainability.
+
+- [x] Created a dedicated LoginPage class to handle page interactions (pages/login_page.py).
+
+- [x] Implemented explicit waits using WebDriverWait and Expected Conditions (EC) to ensure reliable test execution.
+
+- [x] Updated test files (tests/test_login.py) to use the new POM class for cleaner, more readable test logic.
+
+- [x] Maintained compatibility with pytest for easy execution and reporting.
+
+- [x] Improved test stability by avoiding flakiness due to timing issues.
+
 ---
 
 ## 🔧 Tools Used
