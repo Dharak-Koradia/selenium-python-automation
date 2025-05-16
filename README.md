@@ -36,6 +36,37 @@ In this phase:
 
 - [x] Improved test stability by avoiding flakiness due to timing issues.
 
+## 🚀 Phase 4 – Config Management, Test Data Handling & Allure Reporting
+
+### Key Enhancements:
+
+- [x] Centralized Test Configuration
+
+  - [x] Moved test settings to a config/config.yaml file
+    - `base_url`
+    - `valid_username` (used)
+    - `valid_password` (used)
+    - `implicit_wait`
+  - [x] This makes the tests more maintainable and avoids hardcoding values directly in test files or page objects.
+
+- [x] Allure Reporting Integration
+  - [x] Integrated allure-pytest plugin for advanced reporting.
+  - [x] Generates clean, visual test reports with detailed steps and results.
+  - [x] Run tests and generate report using:
+
+```bash
+pytest -v
+allure serve allure-results
+```
+
+### Technologies Used:
+
+- [x] PyYAML – to load configuration from YAML file
+- [x] Allure – for rich test reporting
+- [x] Updated requirements.txt using pip freeze
+
+![Allure Report Preview](assets/allure-report-preview.png)
+
 ---
 
 ## 🔧 Tools Used
