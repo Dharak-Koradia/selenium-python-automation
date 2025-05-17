@@ -2,3 +2,5 @@ base_url: "https://the-internet.herokuapp.com/login"
 valid_username: "tomsmith"
 valid_password: "SuperSecretPassword!"
 implicit_wait: 10
+browser: "firefox"         # Options: chrome, firefox
+headless: true            # Set to true to run browser in headless mode

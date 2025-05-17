@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 *.log
 chromedriver.log
+allure-results/
+.DS_Store
+drivers/geckodriver
