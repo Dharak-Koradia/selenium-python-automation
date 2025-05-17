@@ -1,102 +1,94 @@
-# Selenium Python Automation
+# 🤖 Selenium Automation Framework (Python)
 
-A step-by-step evolution of a Selenium-based automation framework in Python — showcasing both foundational and advanced skills in automated UI testing.
+End-to-end test automation framework using **Selenium**, built to demonstrate QA skills across key areas including:
 
-## 🚀 Phase 1: Basic Login Test
-
-- [x] Uses raw Selenium WebDriver in Python
-- [x] Runs a simple login test on [Practice Test Automation](https://practicetestautomation.com/practice-test-login/)
-- [x] Uses ChromeDriver locally
-- [x] Manual script run without test framework
-
-## 🚀 Phase 2: Pytest + Fixtures + Parameterization
-
-- [x] Switched to **Pytest** as the test runner
-- [x] Created reusable `driver` fixture using `conftest.py`
-- [x] Added **test markers** to group tests
-- [x] Implemented:
-  - [x] Positive test (`test_successful_login`)
-  - [x] Negative test with invalid credentials
-  - [x] **Parameterized test** using `@pytest.mark.parametrize` to run multiple login scenarios
-- [x] Added **explicit waits** using `WebDriverWait` to avoid flaky tests
-
-## 🚀 Phase 3: Introduced Page Object Model (POM) Design Pattern
-
-In this phase:
-
-- [x] Refactored the login test to follow the Page Object Model structure for better code organization and maintainability.
-
-- [x] Created a dedicated LoginPage class to handle page interactions (pages/login_page.py).
-
-- [x] Implemented explicit waits using WebDriverWait and Expected Conditions (EC) to ensure reliable test execution.
-
-- [x] Updated test files (tests/test_login.py) to use the new POM class for cleaner, more readable test logic.
-
-- [x] Maintained compatibility with pytest for easy execution and reporting.
-
-- [x] Improved test stability by avoiding flakiness due to timing issues.
-
-## 🚀 Phase 4 – Config Management, Test Data Handling & Allure Reporting
-
-### Key Enhancements:
-
-- [x] Centralized Test Configuration
-
-  - [x] Moved test settings to a config/config.yaml file
-    - `base_url`
-    - `valid_username` (used)
-    - `valid_password` (used)
-    - `implicit_wait`
-  - [x] This makes the tests more maintainable and avoids hardcoding values directly in test files or page objects.
-
-- [x] Allure Reporting Integration
-  - [x] Integrated allure-pytest plugin for advanced reporting.
-  - [x] Generates clean, visual test reports with detailed steps and results.
-  - [x] Run tests and generate report using:
-
-```bash
-pytest -v
-allure serve allure-results
-```
-
-### Technologies Used:
-
-- [x] PyYAML – to load configuration from YAML file
-- [x] Allure – for rich test reporting
-- [x] Updated requirements.txt using pip freeze
-
-![Allure Report Preview](assets/allure-report-preview.png)
+- Pytest for test orchestration
+- Page Object Model for maintainability
+- YAML config for environment setup
+- Allure reports for rich test insights
+- Cross-browser and headless execution
 
 ---
 
-## 🔧 Tools Used
+## 🛠️ Tech Stack
 
-- Python 3.13
-- Selenium 4.32.0
-- ChromeDriver (compatible with Chrome 136)
-- Pytest 8.x
+- Python 3.x
+- Selenium WebDriver
+- Pytest
+- Allure Reporting
+- YAML for Config Management
+- GitHub Actions (CI) – \[planned]
+- Requests (for API testing) – \[planned]
 
 ---
 
-### How to Run
+## ▶️ How to Run Tests
 
-1. Have Python on your machine (preferably **3.13.X**)
-2. [Install chromedriver](https://googlechromelabs.github.io/chrome-for-testing/known-good-versions.json) compatible with your current Chrome version.
-3. Create a virtual environment
-4. Install dependencies:
+### 1. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-#### Run all tests:
+### 2. Run tests:
 
 ```bash
-pytest -v
+pytest --alluredir=allure-results
 ```
 
-#### Run only login tests:
+### 3. View Allure Report:
 
 ```bash
-pytest -m login -v
+allure serve allure-results
 ```
+
+---
+
+## 🏷️ Test Labels
+
+Tests are marked using `pytest.mark`:
+
+- `@smoke` – Critical path tests
+- `@regression` – Broader suite
+- `@api` – API + UI combo (planned)
+
+Run specific types:
+
+```bash
+pytest -m "smoke"
+```
+
+---
+
+## 📂 Branching Strategy
+
+- `main` – Clean final project
+- `phase-X/...` – Learning/building phases
+
+---
+
+## 📸 Sample Screenshots
+
+> Add screenshots of Allure reports here
+
+---
+
+## 🏷️ Badges
+
+> Will add once CI setup is complete (e.g., GitHub Actions)
+
+---
+
+## 📄 Future Enhancements
+
+- API + UI test integration
+- CI Pipeline via GitHub Actions
+- Dockerized test environment
+- Test Strategy doc
+- Coverage reporting
+
+---
+
+## 👤 Author
+
+Built by Dharak Koradia — an aspiring QA Engineer.
