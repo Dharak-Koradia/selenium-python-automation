@@ -5,3 +5,4 @@ chromedriver.log
 allure-results/
 .DS_Store
 drivers/geckodriver
+drivers/chromedriver
