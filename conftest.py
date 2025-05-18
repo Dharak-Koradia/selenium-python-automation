@@ -9,20 +9,29 @@ from pathlib import Path
 
 CONFIG_PATH = Path("config/config.yaml")
 
+# Add CLI option --browser
+def pytest_addoption(parser):
+    parser.addoption(
+        "--browser", action="store", default="chrome", help="Browser to use for tests"
+    )
+
+# Load config from YAML
 @pytest.fixture(scope="session")
 def config():
     with open(CONFIG_PATH, "r") as file:
         return yaml.safe_load(file)
 
+# WebDriver fixture
 @pytest.fixture
-def driver(config):
-    browser = config.get("browser", "chrome").lower()
+def driver(config, request):
+    # Priority: CLI option > config file
+    browser = request.config.getoption("--browser") or config.get("browser", "chrome")
     headless = config.get("headless", False)
 
     if browser == "chrome":
         options = ChromeOptions()
         if headless:
-            options.add_argument("--headless=new")  # or just "--headless" for older versions
+            options.add_argument("--headless=new")
             options.add_argument("--disable-gpu")
         service = ChromeService(executable_path="drivers/chromedriver")
         driver = webdriver.Chrome(service=service, options=options)
