@@ -5,6 +5,8 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 from pathlib import Path
 
 CONFIG_PATH = Path("config/config.yaml")
@@ -12,7 +14,7 @@ CONFIG_PATH = Path("config/config.yaml")
 # Add CLI option --browser
 def pytest_addoption(parser):
     parser.addoption(
-        "--browser", action="store", default="chrome", help="Browser to use for tests"
+        "--browser", action="store", default=None, help="Browser to use for tests"
     )
 
 # Load config from YAML
@@ -25,23 +27,28 @@ def config():
 @pytest.fixture
 def driver(config, request):
     # Priority: CLI option > config file
-    browser = request.config.getoption("--browser") or config.get("browser", "chrome")
+    cli_browser = request.config.getoption("--browser")
+    browser = cli_browser if cli_browser else config.get("browser", "chrome")
     headless = config.get("headless", False)
 
-    if browser == "chrome":
+    if browser.lower() == "chrome":
         options = ChromeOptions()
         if headless:
             options.add_argument("--headless=new")
             options.add_argument("--disable-gpu")
-        service = ChromeService(executable_path="drivers/chromedriver")
-        driver = webdriver.Chrome(service=service, options=options)
+        driver = webdriver.Chrome(
+            service=ChromeService(ChromeDriverManager().install()),
+            options=options
+        )
 
-    elif browser == "firefox":
+    elif browser.lower() == "firefox":
         options = FirefoxOptions()
         if headless:
             options.add_argument("--headless")
-        service = FirefoxService(executable_path="drivers/geckodriver")
-        driver = webdriver.Firefox(service=service, options=options)
+        driver = webdriver.Firefox(
+            service=FirefoxService(GeckoDriverManager().install()),
+            options=options
+        )
 
     else:
         raise ValueError(f"Unsupported browser: {browser}")
