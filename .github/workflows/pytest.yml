@@ -36,3 +36,5 @@ jobs:
 
       - name: Run tests
         run: pytest -m "api or login" --browser ${{ matrix.browser }} --alluredir=allure-results
+        env:
+          API_HOST: localhost

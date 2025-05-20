@@ -2,6 +2,7 @@ import requests
 from selenium.webdriver.common.by import By
 import time
 import pytest
+import os
 
 @pytest.mark.api
 def test_api_and_ui_login(driver, config):
@@ -10,7 +11,8 @@ def test_api_and_ui_login(driver, config):
         "username": config["valid_username"],
         "password": config["valid_password"]
     }
-    api_response = requests.post("http://127.0.0.1:5000/api/login", json=payload)
+    api_host = os.getenv("API_HOST", "127.0.0.1") # default to "127.0.0.1" locally
+    api_response = requests.post(f"http://{api_host}:5000/api/login", json=payload)
     assert api_response.status_code == 200
     assert api_response.json()["status"] == "success"
 
