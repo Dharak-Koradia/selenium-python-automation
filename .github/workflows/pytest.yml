@@ -30,7 +30,7 @@ jobs:
 
       - name: Start Mock API Server
         run: |
-          nohup python mock_api.py &
+          nohup python mock_api.py > mock_api.log 2>&1 &
           sleep 5  # Give server time to start
         shell: bash
 
