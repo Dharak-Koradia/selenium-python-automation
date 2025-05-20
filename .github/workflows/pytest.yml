@@ -28,5 +28,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Start Mock API Server
+        run: |
+          nohup python mock_api.py &
+          sleep 5  # Give server time to start
+        shell: bash
+
       - name: Run tests
-        run: pytest --browser ${{ matrix.browser }} --alluredir=allure-results
+        run: pytest -m "api or login" --browser ${{ matrix.browser }} --alluredir=allure-results
