@@ -30,8 +30,17 @@ jobs:
 
       - name: Start Mock API Server
         run: |
-          nohup python mock_api.py > mock_api.log 2>&1 &
-          sleep 5  # Give server time to start
+          nohup python api/mock_api.py > mock_api.log 2>&1 &
+
+          # Wait for the API to become available (max 30 seconds)
+          for i in {1..30}; do
+            if curl --silent --fail http://localhost:5000/health; then
+              echo "Mock API is up!"
+              break
+            fi
+            echo "Waiting for Mock API to start..."
+            sleep 1
+          done
         shell: bash
 
       - name: Run tests
