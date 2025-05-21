@@ -12,31 +12,32 @@ End-to-end test automation framework using **Selenium**, built to demonstrate QA
 
 ## 🛠️ Tech Stack
 
-- Python 3.x
+- Python 3.13.0
 - Selenium WebDriver
 - Pytest
 - Allure Reporting
 - YAML for Config Management
-- GitHub Actions (CI) – \[planned]
-- Requests (for API testing) – \[planned]
+- GitHub Actions (CI)
+- Requests (for API testing)
 
 ---
 
 ## ▶️ How to Run Tests
 
-### 1. Install dependencies:
+- Create a python virtual environment
+- Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Run tests:
+- Run tests:
 
 ```bash
-pytest --alluredir=allure-results
+pytest [--browser <chrome or firefox>] [--alluredir=allure-results]
 ```
 
-### 3. View Allure Report:
+- View Allure Report:
 
 ```bash
 allure serve allure-results
@@ -48,14 +49,13 @@ allure serve allure-results
 
 Tests are marked using `pytest.mark`:
 
-- `@smoke` – Critical path tests
-- `@regression` – Broader suite
-- `@api` – API + UI combo (planned)
+- `@login`: Login functionality tests
+- `@api`: API tests, might be combined with UI tests as well
 
 Run specific types:
 
 ```bash
-pytest -m "smoke"
+pytest -m "login"
 ```
 
 ---
@@ -69,20 +69,12 @@ pytest -m "smoke"
 
 ## 📸 Sample Screenshots
 
-> Add screenshots of Allure reports here
-
----
-
-## 🏷️ Badges
-
-> Will add once CI setup is complete (e.g., GitHub Actions)
+![Allure Report Preview](assets/allure-report-preview.png)
 
 ---
 
 ## 📄 Future Enhancements
 
-- API + UI test integration
-- CI Pipeline via GitHub Actions
 - Dockerized test environment
 - Test Strategy doc
 - Coverage reporting
@@ -91,4 +83,4 @@ pytest -m "smoke"
 
 ## 👤 Author
 
-Built by Dharak Koradia — an aspiring QA Engineer.
+Built by Dharak Koradia — QA Engineer.
